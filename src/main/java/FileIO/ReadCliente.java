@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package FileIO;
-import com.daraf.projectdarafdb.Entidades.Cliente;
+
+import com.daraf.projectdarafprotocol.model.Cliente;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;

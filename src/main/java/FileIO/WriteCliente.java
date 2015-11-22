@@ -5,7 +5,8 @@
  */
 package FileIO;
 
-import com.daraf.projectdarafdb.Entidades.Cliente;
+
+import com.daraf.projectdarafprotocol.model.Cliente;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

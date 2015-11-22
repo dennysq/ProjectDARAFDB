@@ -7,7 +7,8 @@ package com.daraf.projectdarafdb;
 
 import FileIO.ReadCliente;
 import FileIO.WriteCliente;
-import com.daraf.projectdarafdb.Entidades.Cliente;
+import com.daraf.projectdarafprotocol.model.Cliente;
+
 import java.util.ArrayList;
 import java.util.List;
 
