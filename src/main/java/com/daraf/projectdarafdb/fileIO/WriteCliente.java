@@ -9,6 +9,8 @@ import com.daraf.projectdarafprotocol.model.Cliente;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -17,24 +19,22 @@ import java.util.List;
  */
 public class WriteCliente 
 {
-    public void escribir(List<Cliente> clientes)
+    public void escribir(Cliente clientes)
     {
+        File f;
+        f = new File("Cliente.txt");
+        //Escritura
         try
         {
-            String tabla="";
-            File archivo = new File("Cliente.txt");
-            BufferedWriter bw;            
-            bw = new BufferedWriter(new FileWriter(archivo));
-            for (int i = 0; i < clientes.size(); i++) 
-            {
-                tabla += (clientes.get(i).toString()+"\n");
-            }
-            bw.write(tabla);
+            FileWriter w = new FileWriter(f, true);
+            BufferedWriter bw = new BufferedWriter(w);
+            PrintWriter wr = new PrintWriter(bw);          
+            wr.println(clientes.toString()); //concatenamos en el archivo sin borrar lo existente                
+            wr.close();
             bw.close();
+
         }
-        catch(Exception e)
-        {
-            System.out.println(e.toString());
-        }
+        catch(IOException e){};
+
     }
 }

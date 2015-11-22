@@ -1,2 +1,0 @@
-id	idCliente	fecha	total
-1	2	21-11-2015	20.00

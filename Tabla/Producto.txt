@@ -1,3 +1,0 @@
-id	nombre	precio	cantidad
-1	teclado	50.00	5
-2	monitor	200.00	10
