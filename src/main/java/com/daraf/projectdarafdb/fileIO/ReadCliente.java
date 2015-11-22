@@ -7,8 +7,13 @@ package com.daraf.projectdarafdb.fileIO;
 
 import com.daraf.projectdarafprotocol.model.Cliente;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+
 import java.util.List;
+
+
 /**
  *
  * @author ShipO
@@ -16,34 +21,25 @@ import java.util.List;
 public class ReadCliente 
 {
     
-    public void leer(List<Cliente> clientes)
+    public void leer(List<Cliente> clientes) throws FileNotFoundException, IOException
     {
-        try
-        {
-            BufferedReader bf = new BufferedReader(new FileReader("Cliente.txt"));
-            String[] datos;
-            String strLinea;
-            // Leer el archivo linea por linea
-            while ((strLinea = bf.readLine())!=null) 
-            {                
-                // Imprimimos la línea por pantalla
-                System.out.println (strLinea);
-                
-                //datos = strLinea.split("\t");                                
-                //System.out.println (datos[0]+datos[1]+datos[2]+datos[3]+ datos[4]);
-                //clientes.add(new Cliente(datos[0],datos[1],datos[2],datos[3], datos[4]));                                
-            }
-            // Cerramos el archivo
-            bf.close();
-            
-            
-        }
-        catch (Exception e)
-        { //Catch de excepciones
-            System.err.println("Ocurrio un error: " + e.getMessage());
-        }
-        
+        BufferedReader br = new BufferedReader(new FileReader("Cliente.txt"));
+try {
+    StringBuilder sb = new StringBuilder();
+    String line = br.readLine();
+
+    while (line != null) {
+        sb.append(line);
+        sb.append(System.lineSeparator());
+        line = br.readLine();
     }
+    String everything = sb.toString();
+} finally {
+    br.close();
+}
+    }
+ 
+    
     public void buscar(List<Cliente> clientes, String documento)
     {
         for (int i = 0; i < clientes.size(); i++) 
