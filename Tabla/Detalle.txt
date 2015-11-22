@@ -1,0 +1,3 @@
+id	idFactura	nombreProducto	cantidadProducto
+1	1	monitor	2
+2	1	teclado	1

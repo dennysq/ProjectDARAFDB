@@ -5,10 +5,17 @@
  */
 package com.daraf.projectdarafdb;
 
+import FileIO.ReadCliente;
+
 /**
  *
  * @author Susana
  */
-public class test {
-    
+public class test 
+{
+    public static void main(String[] Args)
+    {
+        ReadCliente readc = new ReadCliente();
+        readc.leer(null);
+    }
 }

@@ -1,0 +1,3 @@
+id	nombre	telefono	direccion	identificacion
+1	Alex Toapanta	0983139728	Carcelen	1723520662
+2	Dennys Quiroz	1234567894	Puente 9	7894561238
