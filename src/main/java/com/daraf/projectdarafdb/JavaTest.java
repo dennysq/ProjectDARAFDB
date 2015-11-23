@@ -6,12 +6,7 @@
 package com.daraf.projectdarafdb;
 
 
-import com.daraf.projectdarafdb.fileIO.ReadCliente;
-import com.daraf.projectdarafdb.fileIO.WriteCliente;
-import com.daraf.projectdarafprotocol.model.Cliente;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.daraf.projectdarafdb.fileIO.ReadEmpresa;
 
 /**
  *
@@ -21,11 +16,13 @@ public class JavaTest
 {
     public static void main(String[] Args)
     {
-        List<Cliente> clientes = new ArrayList<>();
-        ReadCliente readc = new ReadCliente();     
-        WriteCliente writec = new WriteCliente();
-        readc.leer(clientes);
-        writec.escribir(new Cliente("5","Alejandra Ponce","0958315268","Sangolqui","2586952668"));
+//        List<Cliente> clientes = new ArrayList<>();
+//        ReadCliente readc = new ReadCliente();     
+//        WriteCliente writec = new WriteCliente();
+//        readc.leer(clientes);
+//        writec.escribir(new Cliente("5","Alejandra Ponce","0958315268","Sangolqui","2586952668"));
+        ReadEmpresa reade = new ReadEmpresa();
+        System.out.println(reade.buscar("shipo", "shipobot1").toString());
         
     }
 }
