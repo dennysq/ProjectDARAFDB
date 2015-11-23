@@ -15,7 +15,7 @@ import java.io.FileReader;
  */
 public class ReadEmpresa 
 {
-    public Empresa buscar(String usuario, String pass)
+    public Empresa buscar(String ruc)
     {
          try
         {   
@@ -26,7 +26,7 @@ public class ReadEmpresa
             while ((cadena = bf.readLine())!=null) 
             {
                 datos = cadena.split("\t");
-                if(datos[4].equals(usuario) && datos[5].equals(pass))
+                if(datos[0].equals(ruc) )
                 {
                     empresa = new Empresa(datos[0],datos[1],datos[2],datos[3],datos[4],datos[5]);
                 }

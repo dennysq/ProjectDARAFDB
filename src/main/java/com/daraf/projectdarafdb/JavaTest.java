@@ -22,7 +22,7 @@ public class JavaTest
 //        readc.leer(clientes);
 //        writec.escribir(new Cliente("5","Alejandra Ponce","0958315268","Sangolqui","2586952668"));
         ReadEmpresa reade = new ReadEmpresa();
-        System.out.println(reade.buscar("shipo", "shipobot1").toString());
+        System.out.println(reade.buscar("1723520662001").toString());
         
     }
 }
