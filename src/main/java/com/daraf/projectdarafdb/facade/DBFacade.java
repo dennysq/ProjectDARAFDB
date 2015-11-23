@@ -6,6 +6,8 @@
 package com.daraf.projectdarafdb.facade;
 
 import com.daraf.projectdarafdb.fileIO.ReadEmpresa;
+import com.daraf.projectdarafdb.fileIO.WriteCliente;
+import com.daraf.projectdarafprotocol.model.Cliente;
 import com.daraf.projectdarafprotocol.model.Empresa;
 
 /**
@@ -23,5 +25,17 @@ public class DBFacade {
 
         }
         return null;
+    }
+    public static boolean insertarcliente(String id, String nombre, String direccion,String telefono){
+        if(id!=null && nombre!=null && direccion!=null && telefono!=null){
+            WriteCliente writer=new WriteCliente();
+            Cliente cli=new Cliente(id, nombre, telefono, direccion, direccion);
+            writer.escribir(cli);
+            return true;
+            
+        }
+        else{
+            return false;
+        }
     }
 }

@@ -14,6 +14,8 @@ import com.daraf.projectdarafprotocol.Mensaje;
 import com.daraf.projectdarafprotocol.appdb.seguridades.AutenticacionEmpresaRQ;
 import com.daraf.projectdarafprotocol.appdb.MensajeRQ;
 import com.daraf.projectdarafprotocol.appdb.MensajeRS;
+import com.daraf.projectdarafprotocol.appdb.ingresos.IngresoClienteRQ;
+import com.daraf.projectdarafprotocol.appdb.ingresos.IngresoClienteRS;
 import com.daraf.projectdarafprotocol.appdb.seguridades.AutenticacionEmpresaRS;
 import com.daraf.projectdarafprotocol.model.Empresa;
 import java.io.BufferedReader;
@@ -74,6 +76,20 @@ public class DBSocketSession extends Thread {
                             output.flush();
                         }
                     }
+                }
+                if(msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_INGRESOCLIENTE)){
+                    IngresoClienteRQ ing = (IngresoClienteRQ) msj.getCuerpo();
+                        Boolean ingresocorrecto =DBFacade.insertarcliente(ing.getId(),ing.getNombre(),ing.getDireccion(),ing.getTelefono());
+                        MensajeRS mensajeRS = new MensajeRS("dbserver",Mensaje.ID_MENSAJE_INGRESOCLIENTE);
+                        IngresoClienteRS ingrs =new IngresoClienteRS();
+                        if(ingresocorrecto)
+                           ingrs.setResultado("1");
+                        else{
+                            ingrs.setResultado("2");
+                        }
+                        mensajeRS.setCuerpo(ingrs);
+                        output.write(mensajeRS.asTexto() + "\n");
+                        output.flush();
                 }
 
             }
