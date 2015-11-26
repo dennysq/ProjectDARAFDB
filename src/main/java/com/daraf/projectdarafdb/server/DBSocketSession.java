@@ -18,6 +18,7 @@ import com.daraf.projectdarafprotocol.appdb.consultas.ConsultaProductoRQ;
 import com.daraf.projectdarafprotocol.appdb.consultas.ConsultaProductoRS;
 import com.daraf.projectdarafprotocol.appdb.ingresos.IngresoClienteRQ;
 import com.daraf.projectdarafprotocol.appdb.ingresos.IngresoClienteRS;
+import com.daraf.projectdarafprotocol.appdb.ingresos.IngresoFacturaRQ;
 import com.daraf.projectdarafprotocol.appdb.seguridades.AutenticacionEmpresaRS;
 import com.daraf.projectdarafprotocol.model.Empresa;
 import com.daraf.projectdarafprotocol.model.Producto;
@@ -107,6 +108,21 @@ public class DBSocketSession extends Thread {
                 if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_INGRESOCLIENTE)) {
                     IngresoClienteRQ ing = (IngresoClienteRQ) msj.getCuerpo();
                     Boolean ingresocorrecto = DBFacade.insertarcliente(ing.getId(), ing.getNombre(), ing.getDireccion(), ing.getTelefono());
+                    MensajeRS mensajeRS = new MensajeRS("dbserver", Mensaje.ID_MENSAJE_INGRESOCLIENTE);
+                    IngresoClienteRS ingrs = new IngresoClienteRS();
+                    if (ingresocorrecto) {
+                        ingrs.setResultado("1");
+                    } else {
+                        ingrs.setResultado("2");
+                    }
+                    mensajeRS.setCuerpo(ingrs);
+                    output.write(mensajeRS.asTexto() + "\n");
+                    output.flush();
+                }
+                if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_INGRESOFACTURA)) {
+                    IngresoFacturaRQ ing = (IngresoFacturaRQ) msj.getCuerpo();
+
+                    Boolean ingresocorrecto = DBFacade.insertarFactura(ing.getIdFactura(), ing.getIdentificacionCliente(), ing.getFecha(), ing.getTotal(), ing.getDetalles());
                     MensajeRS mensajeRS = new MensajeRS("dbserver", Mensaje.ID_MENSAJE_INGRESOCLIENTE);
                     IngresoClienteRS ingrs = new IngresoClienteRS();
                     if (ingresocorrecto) {

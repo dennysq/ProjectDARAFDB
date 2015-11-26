@@ -21,7 +21,7 @@ public class WriteDetalle
     public void escribir(Detalle detalles)
     {
         File f;
-        f = new File("Cliente.txt");
+        f = new File("Detalle.txt");
         //Escritura
         try
         {
