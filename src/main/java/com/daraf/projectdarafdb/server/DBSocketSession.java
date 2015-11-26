@@ -14,10 +14,13 @@ import com.daraf.projectdarafprotocol.Mensaje;
 import com.daraf.projectdarafprotocol.appdb.seguridades.AutenticacionEmpresaRQ;
 import com.daraf.projectdarafprotocol.appdb.MensajeRQ;
 import com.daraf.projectdarafprotocol.appdb.MensajeRS;
+import com.daraf.projectdarafprotocol.appdb.consultas.ConsultaProductoRQ;
+import com.daraf.projectdarafprotocol.appdb.consultas.ConsultaProductoRS;
 import com.daraf.projectdarafprotocol.appdb.ingresos.IngresoClienteRQ;
 import com.daraf.projectdarafprotocol.appdb.ingresos.IngresoClienteRS;
 import com.daraf.projectdarafprotocol.appdb.seguridades.AutenticacionEmpresaRS;
 import com.daraf.projectdarafprotocol.model.Empresa;
+import com.daraf.projectdarafprotocol.model.Producto;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -59,8 +62,8 @@ public class DBSocketSession extends Thread {
                         // metodo de autenticacion
                         AutenticacionEmpresaRQ aut = (AutenticacionEmpresaRQ) msj.getCuerpo();
                         Empresa empresaDB = DBFacade.selectCompany(aut.getIdentificacion().trim());//uso el trim para obviar los espacios en blanco en caso de que hubiere
-                            MensajeRS mensajeRS = new MensajeRS("dbserver", Mensaje.ID_MENSAJE_AUTENTICACIONCLIENTE);
-                            AutenticacionEmpresaRS autRS = new AutenticacionEmpresaRS();
+                        MensajeRS mensajeRS = new MensajeRS("dbserver", Mensaje.ID_MENSAJE_AUTENTICACIONCLIENTE);
+                        AutenticacionEmpresaRS autRS = new AutenticacionEmpresaRS();
                         if (empresaDB != null) {
 
                             autRS.setResultado("1");
@@ -69,31 +72,55 @@ public class DBSocketSession extends Thread {
                             output.write(mensajeRS.asTexto() + "\n");
                             output.flush();
 
-                        }else{
+                        } else {
                             autRS.setResultado("2");
                             mensajeRS.setCuerpo(autRS);
-                                output.write(mensajeRS.asTexto() + "\n");
+                            output.write(mensajeRS.asTexto() + "\n");
                             output.flush();
                         }
                     }
-                }
-                if(msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_INGRESOCLIENTE)){
-                    IngresoClienteRQ ing = (IngresoClienteRQ) msj.getCuerpo();
-                        Boolean ingresocorrecto =DBFacade.insertarcliente(ing.getId(),ing.getNombre(),ing.getDireccion(),ing.getTelefono());
-                        MensajeRS mensajeRS = new MensajeRS("dbserver",Mensaje.ID_MENSAJE_INGRESOCLIENTE);
-                        IngresoClienteRS ingrs =new IngresoClienteRS();
-                        if(ingresocorrecto)
-                           ingrs.setResultado("1");
-                        else{
-                            ingrs.setResultado("2");
+
+                    if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_CONSULTAPRODUCTO)) {
+
+                        ConsultaProductoRQ cprq = (ConsultaProductoRQ) msj.getCuerpo();
+                        Producto productoDB = DBFacade.buscarProducto(cprq.getIdProducto().trim());
+                        MensajeRS mensajeRS = new MensajeRS("dbserver", Mensaje.ID_MENSAJE_CONSULTAPRODUCTO);
+
+                        ConsultaProductoRS cprs = new ConsultaProductoRS();
+                        if (productoDB != null) {
+
+                            cprs.setResultado("1");
+                            cprs.setProducto(productoDB);
+                            mensajeRS.setCuerpo(cprs);
+                            output.write(mensajeRS.asTexto() + "\n");
+                            output.flush();
+
+                        } else {
+                            cprs.setResultado("2");
+                            mensajeRS.setCuerpo(cprs);
+                            output.write(mensajeRS.asTexto() + "\n");
+                            output.flush();
                         }
-                        mensajeRS.setCuerpo(ingrs);
-                        output.write(mensajeRS.asTexto() + "\n");
-                        output.flush();
+                    }
+
+                }
+                if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_INGRESOCLIENTE)) {
+                    IngresoClienteRQ ing = (IngresoClienteRQ) msj.getCuerpo();
+                    Boolean ingresocorrecto = DBFacade.insertarcliente(ing.getId(), ing.getNombre(), ing.getDireccion(), ing.getTelefono());
+                    MensajeRS mensajeRS = new MensajeRS("dbserver", Mensaje.ID_MENSAJE_INGRESOCLIENTE);
+                    IngresoClienteRS ingrs = new IngresoClienteRS();
+                    if (ingresocorrecto) {
+                        ingrs.setResultado("1");
+                    } else {
+                        ingrs.setResultado("2");
+                    }
+                    mensajeRS.setCuerpo(ingrs);
+                    output.write(mensajeRS.asTexto() + "\n");
+                    output.flush();
                 }
 
             }
-                            
+
             socket.close();
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

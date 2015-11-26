@@ -42,7 +42,7 @@ public class DBFacade {
         }
     }
     
-    public Producto buscarProducto(String idProducto)
+    public static Producto buscarProducto(String idProducto)
     {
         Producto producto = null;
         try
