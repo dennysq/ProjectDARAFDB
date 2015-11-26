@@ -87,8 +87,8 @@ public class DBSocketSession extends Thread {
                         // metodo de autenticacion
                         ConsultaClienteRQ cli = (ConsultaClienteRQ) msj.getCuerpo();
                         Cliente clienteDB = DBFacade.selectCliente(cli.getIdentificacion().trim());//uso el trim para obviar los espacios en blanco en caso de que hubiere
-                            MensajeRS mensajeRS = new MensajeRS("dbserver", Mensaje.ID_MENSAJE_CONSULTACLIENTE);
-                            ConsultaClienteRS cliRS = new ConsultaClienteRS();
+                        MensajeRS mensajeRS = new MensajeRS("dbserver", Mensaje.ID_MENSAJE_CONSULTACLIENTE);
+                        ConsultaClienteRS cliRS = new ConsultaClienteRS();
                         if (clienteDB != null) {
                             cliRS.setResultado("1");
                             cliRS.setCliente(clienteDB);
@@ -102,15 +102,21 @@ public class DBSocketSession extends Thread {
                             output.flush();
                         }
                     }
-                    if(msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_INGRESOCLIENTE)){
-                    IngresoClienteRQ ing = (IngresoClienteRQ) msj.getCuerpo();
-                        Boolean ingresocorrecto =DBFacade.insertarcliente(ing.getId(),ing.getNombre(),ing.getDireccion(),ing.getTelefono());
-                        MensajeRS mensajeRS = new MensajeRS("dbserver",Mensaje.ID_MENSAJE_INGRESOCLIENTE);
-                        IngresoClienteRS ingrs =new IngresoClienteRS();
-                        if(ingresocorrecto)
-                           ingrs.setResultado("1");
-                        else{
+                    if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_INGRESOCLIENTE)) {
+                        IngresoClienteRQ ing = (IngresoClienteRQ) msj.getCuerpo();
+                        Boolean ingresocorrecto = DBFacade.insertarcliente(ing.getCliente().getIdentificacion(), ing.getCliente().getNombre(), ing.getCliente().getTelefono(), ing.getCliente().getDireccion());
+                        MensajeRS mensajeRS = new MensajeRS("dbserver", Mensaje.ID_MENSAJE_INGRESOCLIENTE);
+                        IngresoClienteRS ingrs = new IngresoClienteRS();
+                        if (ingresocorrecto) {
+                            ingrs.setResultado("1");
+                            mensajeRS.setCuerpo(ingrs);
+                            output.write(mensajeRS.asTexto() + "\n");
+                            output.flush();
+                        } else {
                             ingrs.setResultado("2");
+                            mensajeRS.setCuerpo(ingrs);
+                            output.write(mensajeRS.asTexto() + "\n");
+                            output.flush();
                         }
                     }
                     if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_CONSULTAPRODUCTO)) {
@@ -136,11 +142,8 @@ public class DBSocketSession extends Thread {
                         }
                     }
 
-                }
-                
-                else
-                {
-                    output.write(Mensaje.ID_MENSAJE_FALLOBUILD+"\n");
+                } else {
+                    output.write(Mensaje.ID_MENSAJE_FALLOBUILD + "\n");
                     output.flush();
                 }
             }

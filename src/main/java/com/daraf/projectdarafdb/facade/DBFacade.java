@@ -44,20 +44,6 @@ public class DBFacade {
             return false;
         }
     }
-    /*
-     public static Cliente selectCliente(String identi) {
-
-     if (!identi.isEmpty()) {
-     List<Cliente> cliente;
-     ReadCliente reader = new ReadCliente();
-     cliente=new ArrayList<>();
-     reader.leer(cliente);
-     System.err.println("Lo que obtiene es: "+reader.buscar(cliente, identi).asTexto());
-     return reader.buscar(cliente, identi);
-     }
-     return null;
-     }
-     */
 
     public static Cliente selectCliente(String identificacion) {
         Cliente cliente = null;
@@ -101,7 +87,14 @@ public class DBFacade {
 
     /*
     public static void main(String[] args) {
-        selectCliente("1000000000");
-    }*/
+        String identificacion = "0503337909";
+        String nombre = "Ana Lucia";
+        String telefono = "0993188521";
+        String direccion = "Quito";
 
+        if (insertarcliente(identificacion, nombre, telefono, direccion))
+            System.err.println("si");
+                
+    }
+*/
 }
