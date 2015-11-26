@@ -152,5 +152,17 @@ public class DBFacade {
         factura.setDetalles(detalles.leer(factura.getId()));
         return factura;
     }
+    /*
+    public static void main(String[] args) {
+        String buscar="0000000005";
+        Factura factura = new Factura();
+
+        factura = buscarFactura(buscar);
+        
+        if(factura !=null)
+               System.out.print(factura.toString()+"\n"); 
+        else
+            System.err.println("No encontrado factura");
+    }*/
     
 }

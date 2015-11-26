@@ -5,10 +5,10 @@
  */
 package com.daraf.projectdarafdb.fileIO;
 
-import com.daraf.projectdarafprotocol.model.Cliente;
 import com.daraf.projectdarafprotocol.model.DetalleFacturaAppRQ;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,13 +24,15 @@ public class ReadDetalle
         {      
             String datos[];
             String cadena;
-            BufferedReader bf = new BufferedReader(new FileReader("detalle.txt"));         
+            detalles= new ArrayList<>();
+            BufferedReader bf = new BufferedReader(new FileReader("Detalle.txt"));         
             while ((cadena = bf.readLine())!=null) 
             {                
                 datos = cadena.split("\t");
                 if(idFactura.equals(datos[0]))
                 {
                     detalles.add(new DetalleFacturaAppRQ(datos[1],datos[3]));
+                    //System.err.println(""+detalles.toString());
                 }
                 
             }
