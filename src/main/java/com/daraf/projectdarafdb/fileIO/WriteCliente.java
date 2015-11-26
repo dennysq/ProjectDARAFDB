@@ -30,7 +30,7 @@ public class WriteCliente
             FileWriter w = new FileWriter(f, true);
             BufferedWriter bw = new BufferedWriter(w);
             PrintWriter wr = new PrintWriter(bw);          
-            wr.println(clientes.toString()); //concatenamos en el archivo sin borrar lo existente                
+            wr.println(clientes.Astexto()); //concatenamos en el archivo sin borrar lo existente                
             wr.close();
             bw.close();
 
