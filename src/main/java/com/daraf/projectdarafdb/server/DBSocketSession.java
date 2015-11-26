@@ -113,7 +113,8 @@ public class DBSocketSession extends Thread {
                            ingrs.setResultado("1");
                         else{
                             ingrs.setResultado("2");
-
+                        }
+                    }
                     if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_CONSULTAPRODUCTO)) {
 
                         ConsultaProductoRQ cprq = (ConsultaProductoRQ) msj.getCuerpo();
@@ -152,15 +153,10 @@ public class DBSocketSession extends Thread {
                     output.write(mensajeRS.asTexto() + "\n");
                     output.flush();
                 }
-                }
-                
-
             }
-
             socket.close();
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
 }
