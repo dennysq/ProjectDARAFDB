@@ -52,7 +52,7 @@ public class ReadCliente
             {
                 datos = cadena.split("\t");
                 System.out.println(cadena);
-                clientes.add(new Cliente(datos[0],datos[1],datos[2],datos[3],datos[4]));
+                clientes.add(new Cliente(datos[4],datos[1],datos[2],datos[3]));
             }
             
             bf.close();

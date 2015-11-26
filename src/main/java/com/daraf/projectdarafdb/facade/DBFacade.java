@@ -32,7 +32,7 @@ public class DBFacade {
     public static boolean insertarcliente(String id, String nombre, String direccion,String telefono){
         if(id!=null && nombre!=null && direccion!=null && telefono!=null){
             WriteCliente writer=new WriteCliente();
-            Cliente cli=new Cliente(id, nombre, telefono, direccion, direccion);
+            Cliente cli=new Cliente(id, nombre, telefono, direccion);
             writer.escribir(cli);
             return true;
             
