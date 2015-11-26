@@ -104,18 +104,10 @@ public class DBSocketSession extends Thread {
                     }
 
                 }
-                if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_INGRESOCLIENTE)) {
-                    IngresoClienteRQ ing = (IngresoClienteRQ) msj.getCuerpo();
-                    Boolean ingresocorrecto = DBFacade.insertarcliente(ing.getId(), ing.getNombre(), ing.getDireccion(), ing.getTelefono());
-                    MensajeRS mensajeRS = new MensajeRS("dbserver", Mensaje.ID_MENSAJE_INGRESOCLIENTE);
-                    IngresoClienteRS ingrs = new IngresoClienteRS();
-                    if (ingresocorrecto) {
-                        ingrs.setResultado("1");
-                    } else {
-                        ingrs.setResultado("2");
-                    }
-                    mensajeRS.setCuerpo(ingrs);
-                    output.write(mensajeRS.asTexto() + "\n");
+                
+                else
+                {
+                    output.write(Mensaje.ID_MENSAJE_FALLOBUILD+"\n");
                     output.flush();
                 }
 
