@@ -45,11 +45,14 @@ public class ReadCliente
     {
         try
         {          
+            String datos[];
             String cadena;
             BufferedReader bf = new BufferedReader(new FileReader("Cliente.txt"));         
             while ((cadena = bf.readLine())!=null) 
             {
+                datos = cadena.split("\t");
                 System.out.println(cadena);
+                clientes.add(new Cliente(datos[0],datos[1],datos[2],datos[3],datos[4]));
             }
             
             bf.close();

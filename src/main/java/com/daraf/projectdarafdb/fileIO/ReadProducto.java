@@ -20,12 +20,16 @@ public class ReadProducto
     public void leer(List<Producto> productos) 
     {
         try
-        {          
+        {      
+            String datos[];
             String cadena;
             BufferedReader bf = new BufferedReader(new FileReader("Producto.txt"));         
             while ((cadena = bf.readLine())!=null) 
             {
                 System.out.println(cadena);
+                datos = cadena.split("\t");
+                System.out.println(cadena);
+                productos.add(new Producto(datos[0],datos[1],datos[2],datos[3]));
             }
             
             bf.close();

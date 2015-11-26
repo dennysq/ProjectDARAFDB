@@ -20,11 +20,15 @@ public class ReadFactura
     {
         try
         {          
+            String datos[];
             String cadena;
             BufferedReader bf = new BufferedReader(new FileReader("Factura.txt"));         
             while ((cadena = bf.readLine())!=null) 
             {
                 System.out.println(cadena);
+                datos = cadena.split("\t");
+                System.out.println(cadena);
+                facturas.add(new Factura(datos[0],datos[1],datos[2],datos[3]));
             }
             
             bf.close();
