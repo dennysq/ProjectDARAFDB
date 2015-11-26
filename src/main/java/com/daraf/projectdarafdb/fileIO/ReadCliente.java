@@ -63,18 +63,15 @@ public class ReadCliente
         }
     }
     
-    public void buscar(List<Cliente> clientes, String documento)
+    public Cliente buscar(List<Cliente> clientes, String documento)
     {
         for (int i = 0; i < clientes.size(); i++) 
         {
-                if(!clientes.get(i).getIdentificacion().equals(documento))
+                if(clientes.get(i).getIdentificacion().equals(documento))
                 {
-                    clientes.remove(i);
+                 return   clientes.get(i);
                 }
         }
-        for (int i = 0; i < clientes.size(); i++) 
-        {
-            System.out.println (clientes.get(i).toString());
-        }
+        return null;
     }
 }
