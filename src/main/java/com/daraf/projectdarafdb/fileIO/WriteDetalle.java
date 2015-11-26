@@ -28,7 +28,7 @@ public class WriteDetalle
             FileWriter w = new FileWriter(f, true);
             BufferedWriter bw = new BufferedWriter(w);
             PrintWriter wr = new PrintWriter(bw);          
-            wr.println(detalles.AsTexto()); //concatenamos en el archivo sin borrar lo existente                
+            wr.println(detalles.asTexto()); //concatenamos en el archivo sin borrar lo existente                
             wr.close();
             bw.close();
 

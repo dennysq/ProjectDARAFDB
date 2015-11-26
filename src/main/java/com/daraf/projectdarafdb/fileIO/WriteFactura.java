@@ -28,7 +28,7 @@ public class WriteFactura
             FileWriter w = new FileWriter(f, true);
             BufferedWriter bw = new BufferedWriter(w);
             PrintWriter wr = new PrintWriter(bw);          
-            wr.println(facturas.Astexto()); //concatenamos en el archivo sin borrar lo existente                
+            wr.println(facturas.astexto()); //concatenamos en el archivo sin borrar lo existente                
             wr.close();
             bw.close();
 
