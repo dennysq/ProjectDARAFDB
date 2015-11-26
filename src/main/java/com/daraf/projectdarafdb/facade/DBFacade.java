@@ -7,12 +7,14 @@ package com.daraf.projectdarafdb.facade;
 
 import com.daraf.projectdarafdb.fileIO.ReadCliente;
 import com.daraf.projectdarafdb.fileIO.ReadEmpresa;
+import com.daraf.projectdarafdb.fileIO.ReadFactura;
 import com.daraf.projectdarafdb.fileIO.WriteCliente;
 import com.daraf.projectdarafdb.fileIO.WriteDetalle;
 import com.daraf.projectdarafdb.fileIO.WriteFactura;
 import com.daraf.projectdarafprotocol.model.Cliente;
 import com.daraf.projectdarafprotocol.model.Detalle;
 import com.daraf.projectdarafprotocol.model.Empresa;
+import com.daraf.projectdarafprotocol.model.Factura;
 import java.util.ArrayList;
 import java.util.List;
 import com.daraf.projectdarafprotocol.model.Producto;
@@ -68,21 +70,17 @@ public class DBFacade {
         try {
             String datos[];
             String cadena;
+            BufferedReader bf = new BufferedReader(new FileReader("Cliente.txt"));
             while ((cadena = bf.readLine()) != null) {
                 datos = cadena.split("\t");
-            BufferedReader bf = new BufferedReader(new FileReader("Cliente.txt"));
+                if (datos[0].equals(identificacion)) {
+                    System.err.println("" + datos[0]);
+                    cliente = new Cliente(datos[0], datos[1], datos[2], datos[3]);
                 }
             }
-                if (datos[0].equals(identificacion)) {
-                    System.err.println(""+datos[0]);
-                    cliente = new Cliente(datos[0], datos[1], datos[2], datos[3]);
             bf.close();
         } catch (Exception e) {
             System.err.println("Ocurrio un error: " + e.getMessage());
-        }
-        return producto;
-    }
-
         }
         return cliente;
     }
@@ -103,4 +101,30 @@ public class DBFacade {
             bf.close();
         } catch (Exception e) {
             System.err.println("Ocurrio un error: " + e.getMessage());
+
+        }
+        return producto;
+    }
+    //voy a  insertae unanueva factura creando los objetos
+
+    public static String insertarFactura(String id, String identificacionCliente, String fecha, String total, List<Detalle> detalles) {
+
+        if (id != null && identificacionCliente != null && fecha != null && total != null) {
+            ReadFactura rf = new ReadFactura();
+            if (rf.verificaExistenciaFactura(id)) {
+                return "3";
+            } else {
+                WriteFactura writer = new WriteFactura();
+                Factura f = new Factura(id, identificacionCliente, fecha, total);
+                writer.escribir(f);
+                WriteDetalle wd = new WriteDetalle();
+                for (Detalle d : detalles) {
+                    wd.escribir(d);
+                }
+                return "1";
+            }
+        } else {
+            return "4";//error en os campos enviados
+        }
+    }
 }
