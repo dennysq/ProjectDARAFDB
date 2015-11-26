@@ -54,7 +54,7 @@ public class DBFacade {
             return reader.buscar(cliente, identi);
         }
         return null;
-    
+     }
     public static Producto buscarProducto(String idProducto)
     {
         Producto producto = null;
