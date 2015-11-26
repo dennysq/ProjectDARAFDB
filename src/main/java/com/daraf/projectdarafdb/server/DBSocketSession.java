@@ -90,13 +90,11 @@ public class DBSocketSession extends Thread {
                             MensajeRS mensajeRS = new MensajeRS("dbserver", Mensaje.ID_MENSAJE_CONSULTACLIENTE);
                             ConsultaClienteRS cliRS = new ConsultaClienteRS();
                         if (clienteDB != null) {
-
                             cliRS.setResultado("1");
                             cliRS.setCliente(clienteDB);
                             mensajeRS.setCuerpo(cliRS);
                             output.write(mensajeRS.asTexto() + "\n");
                             output.flush();
-
                         } else {
                             cliRS.setResultado("2");
                             mensajeRS.setCuerpo(cliRS);
