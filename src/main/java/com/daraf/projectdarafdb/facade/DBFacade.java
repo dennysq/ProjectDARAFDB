@@ -32,52 +32,76 @@ public class DBFacade {
         }
         return null;
     }
-    public static boolean insertarcliente(String id, String nombre, String telefono,String direccion){
-        if(id!=null && nombre!=null && direccion!=null && telefono!=null){
-            WriteCliente writer=new WriteCliente();
-            Cliente cli=new Cliente(id, nombre, telefono, direccion);
+
+    public static boolean insertarcliente(String id, String nombre, String telefono, String direccion) {
+        if (id != null && nombre != null && direccion != null && telefono != null) {
+            WriteCliente writer = new WriteCliente();
+            Cliente cli = new Cliente(id, nombre, telefono, direccion);
             writer.escribir(cli);
             return true;
-            
-        }
-        else{
+
+        } else {
             return false;
         }
     }
+    /*
      public static Cliente selectCliente(String identi) {
 
-        if (!identi.isEmpty()) {
-            List<Cliente> cliente;
-            ReadCliente reader = new ReadCliente();
-            cliente=new ArrayList<>();
-            reader.leer(cliente);
-            return reader.buscar(cliente, identi);
-        }
-        return null;
+     if (!identi.isEmpty()) {
+     List<Cliente> cliente;
+     ReadCliente reader = new ReadCliente();
+     cliente=new ArrayList<>();
+     reader.leer(cliente);
+     System.err.println("Lo que obtiene es: "+reader.buscar(cliente, identi).asTexto());
+     return reader.buscar(cliente, identi);
      }
-    public static Producto buscarProducto(String idProducto)
-    {
-        Producto producto = null;
-        try
-        {      
+     return null;
+     }
+     */
+
+    public static Cliente selectCliente(String identificacion) {
+        Cliente cliente = null;
+        try {
             String datos[];
             String cadena;
-            BufferedReader bf = new BufferedReader(new FileReader("Producto.txt"));         
-            while ((cadena = bf.readLine())!=null) 
-            {
+            BufferedReader bf = new BufferedReader(new FileReader("Cliente.txt"));
+            while ((cadena = bf.readLine()) != null) {
                 datos = cadena.split("\t");
-                if(datos[0].equals(idProducto))
-                {
-                    producto = new Producto(datos[0],datos[1],datos[2],datos[3]);
-                }                                
+                if (datos[0].equals(identificacion)) {
+                    System.err.println(""+datos[0]);
+                    cliente = new Cliente(datos[0], datos[1], datos[2], datos[3]);
+                }
             }
-            
             bf.close();
+        } catch (Exception e) {
+            System.err.println("Ocurrio un error: " + e.getMessage());
         }
-        catch (Exception e)
-        {
-            System.err.println("Ocurrio un error: " + e.getMessage());            
+        return cliente;
+    }
+
+    public static Producto buscarProducto(String idProducto) {
+        Producto producto = null;
+        try {
+            String datos[];
+            String cadena;
+            BufferedReader bf = new BufferedReader(new FileReader("Producto.txt"));
+            while ((cadena = bf.readLine()) != null) {
+                datos = cadena.split("\t");
+                if (datos[0].equals(idProducto)) {
+                    producto = new Producto(datos[0], datos[1], datos[2], datos[3]);
+                }
+            }
+
+            bf.close();
+        } catch (Exception e) {
+            System.err.println("Ocurrio un error: " + e.getMessage());
         }
         return producto;
     }
+
+    /*
+    public static void main(String[] args) {
+        selectCliente("1000000000");
+    }*/
+
 }

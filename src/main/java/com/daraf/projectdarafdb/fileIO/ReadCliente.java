@@ -6,6 +6,7 @@
 package com.daraf.projectdarafdb.fileIO;
 
 import com.daraf.projectdarafprotocol.model.Cliente;
+import com.daraf.projectdarafprotocol.model.Producto;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
@@ -44,15 +45,16 @@ public class ReadCliente
     public void leer(List<Cliente> clientes) 
     {
         try
-        {          
+        {      
             String datos[];
             String cadena;
             BufferedReader bf = new BufferedReader(new FileReader("Cliente.txt"));         
             while ((cadena = bf.readLine())!=null) 
             {
+                System.out.println(cadena);
                 datos = cadena.split("\t");
                 System.out.println(cadena);
-                clientes.add(new Cliente(datos[4],datos[1],datos[2],datos[3]));
+                clientes.add(new Cliente(datos[0],datos[1],datos[2],datos[3]));
             }
             
             bf.close();
@@ -63,15 +65,18 @@ public class ReadCliente
         }
     }
     
-    public Cliente buscar(List<Cliente> clientes, String documento)
+    public void buscar(List<Cliente> clientes, String identifiacion)
     {
         for (int i = 0; i < clientes.size(); i++) 
         {
-                if(clientes.get(i).getIdentificacion().equals(documento))
+                if(!clientes.get(i).getIdentificacion().equals(identifiacion))
                 {
-                 return   clientes.get(i);
+                    clientes.remove(i);
                 }
         }
-        return null;
+        for (int i = 0; i < clientes.size(); i++) 
+        {
+            System.out.println (clientes.get(i).toString());
+        }
     }
 }

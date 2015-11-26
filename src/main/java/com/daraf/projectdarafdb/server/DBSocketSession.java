@@ -97,10 +97,10 @@ public class DBSocketSession extends Thread {
                             output.write(mensajeRS.asTexto() + "\n");
                             output.flush();
 
-                        }else{
+                        } else {
                             cliRS.setResultado("2");
                             mensajeRS.setCuerpo(cliRS);
-                                output.write(mensajeRS.asTexto() + "\n");
+                            output.write(mensajeRS.asTexto() + "\n");
                             output.flush();
                         }
                     }
