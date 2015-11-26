@@ -12,6 +12,9 @@ import com.daraf.projectdarafprotocol.model.Cliente;
 import com.daraf.projectdarafprotocol.model.Empresa;
 import java.util.ArrayList;
 import java.util.List;
+import com.daraf.projectdarafprotocol.model.Producto;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 /**
  *
@@ -51,5 +54,30 @@ public class DBFacade {
             return reader.buscar(cliente, identi);
         }
         return null;
+    
+    public static Producto buscarProducto(String idProducto)
+    {
+        Producto producto = null;
+        try
+        {      
+            String datos[];
+            String cadena;
+            BufferedReader bf = new BufferedReader(new FileReader("Producto.txt"));         
+            while ((cadena = bf.readLine())!=null) 
+            {
+                datos = cadena.split("\t");
+                if(datos[0].equals(idProducto))
+                {
+                    producto = new Producto(datos[0],datos[1],datos[2],datos[3]);
+                }                                
+            }
+            
+            bf.close();
+        }
+        catch (Exception e)
+        {
+            System.err.println("Ocurrio un error: " + e.getMessage());            
+        }
+        return producto;
     }
 }

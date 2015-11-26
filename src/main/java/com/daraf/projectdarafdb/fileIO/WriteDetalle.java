@@ -5,7 +5,7 @@
  */
 package com.daraf.projectdarafdb.fileIO;
 
-import com.daraf.projectdarafprotocol.model.Factura;
+import com.daraf.projectdarafprotocol.model.Detalle;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -16,19 +16,19 @@ import java.io.PrintWriter;
  *
  * @author ShipO
  */
-public class WriteFactura 
+public class WriteDetalle 
 {
-    public void escribir(Factura facturas)
+    public void escribir(Detalle detalles)
     {
         File f;
-        f = new File("Factura.txt");
+        f = new File("Cliente.txt");
         //Escritura
         try
         {
             FileWriter w = new FileWriter(f, true);
             BufferedWriter bw = new BufferedWriter(w);
             PrintWriter wr = new PrintWriter(bw);          
-            wr.println(facturas.astexto()); //concatenamos en el archivo sin borrar lo existente                
+            wr.println(detalles.asTexto()); //concatenamos en el archivo sin borrar lo existente                
             wr.close();
             bw.close();
 
