@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class WriteCliente 
 {
+    
     public void escribir(Cliente clientes)
     {
         File f;

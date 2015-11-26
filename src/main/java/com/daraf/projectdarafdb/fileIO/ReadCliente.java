@@ -18,7 +18,29 @@ import java.util.List;
  */
 public class ReadCliente 
 {
-    
+    public boolean verificaExistenciaCliente(String identificacion)
+    {
+        boolean respuesta = false;
+        try
+        {              
+            String datos[];
+            String cadena;
+            BufferedReader bf = new BufferedReader(new FileReader("Cliente.txt"));                     
+            while ((cadena = bf.readLine())!=null) 
+            {
+                datos = cadena.split("\t");
+                if(datos[4].equals(identificacion))
+                    respuesta = true;
+            }
+            
+            bf.close();
+        }
+        catch (Exception e)
+        {
+            System.err.println("Ocurrio un error: " + e.getMessage());
+        }
+        return respuesta;
+    }
     public void leer(List<Cliente> clientes) 
     {
         try
