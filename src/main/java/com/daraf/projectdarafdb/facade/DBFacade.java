@@ -5,6 +5,7 @@
  */
 package com.daraf.projectdarafdb.facade;
 
+import com.daraf.projectdarafdb.fileIO.ReadCliente;
 import com.daraf.projectdarafdb.fileIO.ReadEmpresa;
 import com.daraf.projectdarafdb.fileIO.WriteCliente;
 import com.daraf.projectdarafdb.fileIO.WriteDetalle;
@@ -12,7 +13,8 @@ import com.daraf.projectdarafdb.fileIO.WriteFactura;
 import com.daraf.projectdarafprotocol.model.Cliente;
 import com.daraf.projectdarafprotocol.model.Detalle;
 import com.daraf.projectdarafprotocol.model.Empresa;
-import com.daraf.projectdarafprotocol.model.Factura;
+import java.util.ArrayList;
+import java.util.List;
 import com.daraf.projectdarafprotocol.model.Producto;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -35,16 +37,54 @@ public class DBFacade {
         return null;
     }
 
-    public static boolean insertarcliente(String id, String nombre, String direccion, String telefono) {
+    public static boolean insertarcliente(String id, String nombre, String telefono, String direccion) {
         if (id != null && nombre != null && direccion != null && telefono != null) {
             WriteCliente writer = new WriteCliente();
-            Cliente cli = new Cliente(id, nombre, telefono, direccion, direccion);
+            Cliente cli = new Cliente(id, nombre, telefono, direccion);
             writer.escribir(cli);
             return true;
 
         } else {
             return false;
         }
+    }
+    /*
+     public static Cliente selectCliente(String identi) {
+
+     if (!identi.isEmpty()) {
+     List<Cliente> cliente;
+     ReadCliente reader = new ReadCliente();
+     cliente=new ArrayList<>();
+     reader.leer(cliente);
+     System.err.println("Lo que obtiene es: "+reader.buscar(cliente, identi).asTexto());
+     return reader.buscar(cliente, identi);
+     }
+     return null;
+     }
+     */
+
+    public static Cliente selectCliente(String identificacion) {
+        Cliente cliente = null;
+        try {
+            String datos[];
+            String cadena;
+            while ((cadena = bf.readLine()) != null) {
+                datos = cadena.split("\t");
+            BufferedReader bf = new BufferedReader(new FileReader("Cliente.txt"));
+                }
+            }
+                if (datos[0].equals(identificacion)) {
+                    System.err.println(""+datos[0]);
+                    cliente = new Cliente(datos[0], datos[1], datos[2], datos[3]);
+            bf.close();
+        } catch (Exception e) {
+            System.err.println("Ocurrio un error: " + e.getMessage());
+        }
+        return producto;
+    }
+
+        }
+        return cliente;
     }
 
     public static Producto buscarProducto(String idProducto) {
@@ -63,31 +103,4 @@ public class DBFacade {
             bf.close();
         } catch (Exception e) {
             System.err.println("Ocurrio un error: " + e.getMessage());
-        }
-        return producto;
-    }
-
-    //voy a  insertae unanueva factura creando los objetos
-
-    public static boolean insertarFactura(String id, String identificacionCliente, String fecha, String total, List<Detalle> detalles) {
-
-//        private String id;//Longitud fija: 10               Ejemplo: 0000000025  *Se completa con ceros a la ixquierda
-//    private String identificacionCliente;//Longitud fija: 20        Ejemplo: 0000000114  *Se completa con ceros a la ixquierda
-//    private String fecha;//Longitud fija:8              Ejemplo: ddMMyyyy 11092013
-//    private String total;//Longitud fija:10             Ejemplo: 1256.30 *Siempre debe tener 2 decimales
-        if (id != null && identificacionCliente != null && fecha != null && total != null) {
-            WriteFactura writer = new WriteFactura();
-            Factura f = new Factura(id, identificacionCliente, fecha, total);
-
-            writer.escribir(f);
-            WriteDetalle wd = new WriteDetalle();
-            for (Detalle d : detalles) {
-                wd.escribir(d);
-            }
-            return true;
-
-        } else {
-            return false;
-        }
-    }
 }
