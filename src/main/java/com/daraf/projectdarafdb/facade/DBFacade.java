@@ -128,4 +128,11 @@ public class DBFacade {
 //         System.err.println("si");
 //                
 //         }
+    //Shipo
+    public static Factura buscarFactura(String idFactura) {
+        Factura factura = null;
+        
+        return factura;
+    }
+    
 }

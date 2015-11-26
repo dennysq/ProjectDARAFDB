@@ -16,6 +16,8 @@ import com.daraf.projectdarafprotocol.appdb.MensajeRQ;
 import com.daraf.projectdarafprotocol.appdb.MensajeRS;
 import com.daraf.projectdarafprotocol.appdb.consultas.ConsultaClienteRQ;
 import com.daraf.projectdarafprotocol.appdb.consultas.ConsultaClienteRS;
+import com.daraf.projectdarafprotocol.appdb.consultas.ConsultaFacturaRQ;
+import com.daraf.projectdarafprotocol.appdb.consultas.ConsultaFacturaRS;
 import com.daraf.projectdarafprotocol.appdb.consultas.ConsultaProductoRQ;
 import com.daraf.projectdarafprotocol.appdb.consultas.ConsultaProductoRS;
 import com.daraf.projectdarafprotocol.appdb.ingresos.IngresoClienteRQ;
@@ -25,6 +27,7 @@ import com.daraf.projectdarafprotocol.appdb.ingresos.IngresoFacturaRS;
 import com.daraf.projectdarafprotocol.appdb.seguridades.AutenticacionEmpresaRS;
 import com.daraf.projectdarafprotocol.model.Cliente;
 import com.daraf.projectdarafprotocol.model.Empresa;
+import com.daraf.projectdarafprotocol.model.Factura;
 import com.daraf.projectdarafprotocol.model.Producto;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -161,7 +164,29 @@ public class DBSocketSession extends Thread {
                     output.write(mensajeRS.asTexto() + "\n");
                     output.flush();
                 }
+                
+                if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_CONSULTAFACTURA)) {
 
+                        ConsultaFacturaRQ cfrq = (ConsultaFacturaRQ) msj.getCuerpo();
+                        Factura facturaDB = DBFacade.buscarFactura(cfrq.getIdFactura().trim());
+                        MensajeRS mensajeRS = new MensajeRS("dbserver", Mensaje.ID_MENSAJE_CONSULTAFACTURA);
+
+                        ConsultaFacturaRS cfrs = new ConsultaFacturaRS();
+                        if (facturaDB != null) {
+
+                            cfrs.setResultado("1");
+                            cfrs.setFactura(facturaDB);
+                            mensajeRS.setCuerpo(cfrs);
+                            output.write(mensajeRS.asTexto() + "\n");
+                            output.flush();
+
+                        } else {
+                            cfrs.setResultado("2");
+                            mensajeRS.setCuerpo(cfrs);
+                            output.write(mensajeRS.asTexto() + "\n");
+                            output.flush();
+                        }
+                    }
             }
             socket.close();
         } catch (Exception e) {
