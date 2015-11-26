@@ -56,17 +56,14 @@ public class DBFacade {
                 if(datos[0].equals(idProducto))
                 {
                     producto = new Producto(datos[0],datos[1],datos[2],datos[3]);
-                }
-                
-                
+                }                                
             }
             
             bf.close();
         }
         catch (Exception e)
         {
-            System.err.println("Ocurrio un error: " + e.getMessage());
-            return producto;
+            System.err.println("Ocurrio un error: " + e.getMessage());            
         }
         return producto;
     }
