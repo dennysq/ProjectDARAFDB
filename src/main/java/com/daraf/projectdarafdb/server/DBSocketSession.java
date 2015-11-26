@@ -190,7 +190,7 @@ public class DBSocketSession extends Thread {
             }
             socket.close();
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error:  " + e.getMessage());
         }
     }
 }
