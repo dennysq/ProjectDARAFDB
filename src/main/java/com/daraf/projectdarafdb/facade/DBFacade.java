@@ -31,7 +31,6 @@ public class DBFacade {
     public static Empresa selectCompany(String identi) {
 
         if (!identi.isEmpty()) {
-
             ReadEmpresa reader = new ReadEmpresa();
             return reader.buscar(identi);
 
@@ -40,6 +39,8 @@ public class DBFacade {
     }
 
     public static boolean insertarcliente(String id, String nombre, String telefono, String direccion) {
+        
+        ReadCliente rc = new ReadCliente();
         if (id != null && nombre != null && direccion != null && telefono != null) {
             WriteCliente writer = new WriteCliente();
             Cliente cli = new Cliente(id, nombre, telefono, direccion);
