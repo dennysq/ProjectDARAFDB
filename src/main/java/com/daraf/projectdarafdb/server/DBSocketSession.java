@@ -14,11 +14,14 @@ import com.daraf.projectdarafprotocol.Mensaje;
 import com.daraf.projectdarafprotocol.appdb.seguridades.AutenticacionEmpresaRQ;
 import com.daraf.projectdarafprotocol.appdb.MensajeRQ;
 import com.daraf.projectdarafprotocol.appdb.MensajeRS;
+import com.daraf.projectdarafprotocol.appdb.consultas.ConsultaClienteRQ;
+import com.daraf.projectdarafprotocol.appdb.consultas.ConsultaClienteRS;
 import com.daraf.projectdarafprotocol.appdb.consultas.ConsultaProductoRQ;
 import com.daraf.projectdarafprotocol.appdb.consultas.ConsultaProductoRS;
 import com.daraf.projectdarafprotocol.appdb.ingresos.IngresoClienteRQ;
 import com.daraf.projectdarafprotocol.appdb.ingresos.IngresoClienteRS;
 import com.daraf.projectdarafprotocol.appdb.seguridades.AutenticacionEmpresaRS;
+import com.daraf.projectdarafprotocol.model.Cliente;
 import com.daraf.projectdarafprotocol.model.Empresa;
 import com.daraf.projectdarafprotocol.model.Producto;
 import java.io.BufferedReader;
@@ -79,7 +82,39 @@ public class DBSocketSession extends Thread {
                             output.flush();
                         }
                     }
+                    if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_CONSULTACLIENTE)) {
 
+                        // metodo de autenticacion
+                        ConsultaClienteRQ cli = (ConsultaClienteRQ) msj.getCuerpo();
+                        Cliente clienteDB = DBFacade.selectCliente(cli.getIdentificacion().trim());//uso el trim para obviar los espacios en blanco en caso de que hubiere
+                            MensajeRS mensajeRS = new MensajeRS("dbserver", Mensaje.ID_MENSAJE_CONSULTACLIENTE);
+                            ConsultaClienteRS cliRS = new ConsultaClienteRS();
+                        if (clienteDB != null) {
+
+                            cliRS.setResultado("1");
+                            cliRS.setCliente(clienteDB);
+                            mensajeRS.setCuerpo(cliRS);
+                            output.write(mensajeRS.asTexto() + "\n");
+                            output.flush();
+
+                        }else{
+                            cliRS.setResultado("2");
+                            mensajeRS.setCuerpo(cliRS);
+                                output.write(mensajeRS.asTexto() + "\n");
+                            output.flush();
+                        }
+                    }
+                    if(msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_INGRESOCLIENTE)){
+                    IngresoClienteRQ ing = (IngresoClienteRQ) msj.getCuerpo();
+                        Boolean ingresocorrecto =DBFacade.insertarcliente(ing.getId(),ing.getNombre(),ing.getDireccion(),ing.getTelefono());
+                        MensajeRS mensajeRS = new MensajeRS("dbserver",Mensaje.ID_MENSAJE_INGRESOCLIENTE);
+                        IngresoClienteRS ingrs =new IngresoClienteRS();
+                        if(ingresocorrecto)
+                           ingrs.setResultado("1");
+                        else{
+                            ingrs.setResultado("2");
+                        }
+                    }
                     if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_CONSULTAPRODUCTO)) {
 
                         ConsultaProductoRQ cprq = (ConsultaProductoRQ) msj.getCuerpo();
@@ -110,13 +145,10 @@ public class DBSocketSession extends Thread {
                     output.write(Mensaje.ID_MENSAJE_FALLOBUILD+"\n");
                     output.flush();
                 }
-
             }
-
             socket.close();
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
 }

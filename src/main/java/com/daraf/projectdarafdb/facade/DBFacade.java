@@ -5,10 +5,13 @@
  */
 package com.daraf.projectdarafdb.facade;
 
+import com.daraf.projectdarafdb.fileIO.ReadCliente;
 import com.daraf.projectdarafdb.fileIO.ReadEmpresa;
 import com.daraf.projectdarafdb.fileIO.WriteCliente;
 import com.daraf.projectdarafprotocol.model.Cliente;
 import com.daraf.projectdarafprotocol.model.Empresa;
+import java.util.ArrayList;
+import java.util.List;
 import com.daraf.projectdarafprotocol.model.Producto;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -29,7 +32,7 @@ public class DBFacade {
         }
         return null;
     }
-    public static boolean insertarcliente(String id, String nombre, String direccion,String telefono){
+    public static boolean insertarcliente(String id, String nombre, String telefono,String direccion){
         if(id!=null && nombre!=null && direccion!=null && telefono!=null){
             WriteCliente writer=new WriteCliente();
             Cliente cli=new Cliente(id, nombre, telefono, direccion);
@@ -41,7 +44,17 @@ public class DBFacade {
             return false;
         }
     }
-    
+     public static Cliente selectCliente(String identi) {
+
+        if (!identi.isEmpty()) {
+            List<Cliente> cliente;
+            ReadCliente reader = new ReadCliente();
+            cliente=new ArrayList<>();
+            reader.leer(cliente);
+            return reader.buscar(cliente, identi);
+        }
+        return null;
+     }
     public static Producto buscarProducto(String idProducto)
     {
         Producto producto = null;
