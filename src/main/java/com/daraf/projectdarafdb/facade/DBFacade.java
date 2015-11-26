@@ -94,7 +94,7 @@ public class DBFacade {
     }
     //voy a  insertae unanueva factura creando los objetos
 
-    public static String insertarFactura(String id, String identificacionCliente, String fecha, String total, List<Detalle> detalles) {
+    public static String insertarFactura(String id, String identificacionCliente, String fecha, String total, String numeroDetalles, List<Detalle> detalles) {
 
         /*
          public static void main(String[] args) {
@@ -111,7 +111,7 @@ public class DBFacade {
                 return "3";
             } else {
                 WriteFactura writer = new WriteFactura();
-                Factura f = new Factura(id, identificacionCliente, fecha, total);
+                Factura f = new Factura(id, identificacionCliente, fecha, total, numeroDetalles);
                 writer.escribir(f);
                 WriteDetalle wd = new WriteDetalle();
                 for (Detalle d : detalles) {

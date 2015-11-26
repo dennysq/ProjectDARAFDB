@@ -25,7 +25,7 @@ public class ReadFactura {
                 System.out.println(cadena);
                 datos = cadena.split("\t");
                 System.out.println(cadena);
-                facturas.add(new Factura(datos[0], datos[1], datos[2], datos[3]));
+                facturas.add(new Factura(datos[0], datos[1], datos[2], datos[3], datos[4]));
             }
 
             bf.close();

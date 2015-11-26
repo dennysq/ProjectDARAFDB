@@ -151,7 +151,7 @@ public class DBSocketSession extends Thread {
                 if (msj.getCabecera().getIdMensaje().equals(Mensaje.ID_MENSAJE_INGRESOFACTURA)) {
                     IngresoFacturaRQ ing = (IngresoFacturaRQ) msj.getCuerpo();
 
-                    String response = DBFacade.insertarFactura(ing.getIdFactura(), ing.getIdentificacionCliente(), ing.getFecha(), ing.getTotal(), ing.getDetalles());
+                    String response = DBFacade.insertarFactura(ing.getIdFactura(), ing.getIdentificacionCliente(), ing.getFecha(), ing.getTotal(), ing.getNumeroDetalles(), ing.getDetalles());
                     MensajeRS mensajeRS = new MensajeRS("dbserver", Mensaje.ID_MENSAJE_INGRESOFACTURA);
                     IngresoFacturaRS ingrs = new IngresoFacturaRS();
 
