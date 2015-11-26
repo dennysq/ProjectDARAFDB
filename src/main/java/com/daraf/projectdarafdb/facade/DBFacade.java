@@ -6,6 +6,7 @@
 package com.daraf.projectdarafdb.facade;
 
 import com.daraf.projectdarafdb.fileIO.ReadCliente;
+import com.daraf.projectdarafdb.fileIO.ReadDetalle;
 import com.daraf.projectdarafdb.fileIO.ReadEmpresa;
 import com.daraf.projectdarafdb.fileIO.ReadFactura;
 import com.daraf.projectdarafdb.fileIO.WriteCliente;
@@ -131,7 +132,24 @@ public class DBFacade {
     //Shipo
     public static Factura buscarFactura(String idFactura) {
         Factura factura = null;
-        
+        ReadDetalle detalles = new ReadDetalle();
+        try {
+            String datos[];
+            String cadena;
+            BufferedReader bf = new BufferedReader(new FileReader("Factura.txt"));
+            while ((cadena = bf.readLine()) != null) {
+                datos = cadena.split("\t");
+                if (datos[0].equals(idFactura)) {
+                    factura = new Factura(datos[0], datos[1], datos[2], datos[3], datos[4]);
+                }
+            }
+
+            bf.close();
+        } catch (Exception e) {
+            System.err.println("Ocurrio un error: " + e.getMessage());
+
+        }
+        factura.setDetalles(detalles.leer(factura.getId()));
         return factura;
     }
     
