@@ -130,8 +130,8 @@ public class DBFacade {
 //                
 //         }
     //Shipo
-    public static Factura buscarFactura(String idFactura) {
-        Factura factura = null;
+    public Factura buscarFactura(String idFactura) {
+        Factura factura = new Factura();
         ReadDetalle detalles = new ReadDetalle();
         try {
             String datos[];
@@ -139,8 +139,12 @@ public class DBFacade {
             BufferedReader bf = new BufferedReader(new FileReader("Factura.txt"));
             while ((cadena = bf.readLine()) != null) {
                 datos = cadena.split("\t");
-                if (datos[0].equals(idFactura)) {
-                    factura = new Factura(datos[0], datos[1], datos[2], datos[3], datos[4]);
+                if (datos[0].equals(idFactura)) {                    
+                    factura.setId(datos[0]);
+                    factura.setFecha(datos[1]);
+                    factura.setTotal(datos[2]);
+                    factura.setIdentificacionCliente(datos[3]);
+                    factura.setNumeroDetalles(datos[4]);
                 }
             }
 
@@ -154,15 +158,15 @@ public class DBFacade {
     }
     
     public static void main(String[] args) {
-        String buscar="0000000005";
-        Factura factura = new Factura();
-
-        factura = buscarFactura(buscar);
-        
-        if(factura !=null)
-               System.out.print(factura.toString()+"\n"); 
-        else
-            System.err.println("No encontrado factura");
+//        String buscar="0000000005";
+//        Factura factura = new Factura();
+//
+//        factura = buscarFactura(buscar);
+//        
+//        if(factura !=null)
+//               System.out.print(factura.toString()+"\n"); 
+//        else
+//            System.err.println("No encontrado factura");
     }
     
 }

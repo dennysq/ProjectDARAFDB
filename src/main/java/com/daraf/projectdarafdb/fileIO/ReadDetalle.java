@@ -19,7 +19,7 @@ public class ReadDetalle
 {    
     public List<DetalleFacturaAppRQ> leer(String idFactura)            
     {
-        List<DetalleFacturaAppRQ> detalles = null;
+        List<DetalleFacturaAppRQ> detalles = new ArrayList<>();                
         try
         {      
             String datos[];
