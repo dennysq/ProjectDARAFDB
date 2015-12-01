@@ -130,7 +130,7 @@ public class DBFacade {
 //                
 //         }
     //Shipo
-    public Factura buscarFactura(String idFactura) {
+    public static Factura buscarFactura(String idFactura) {
         Factura factura = new Factura();
         ReadDetalle detalles = new ReadDetalle();
         try {
