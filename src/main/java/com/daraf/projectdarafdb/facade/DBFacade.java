@@ -12,6 +12,7 @@ import com.daraf.projectdarafdb.fileIO.ReadFactura;
 import com.daraf.projectdarafdb.fileIO.WriteCliente;
 import com.daraf.projectdarafdb.fileIO.WriteDetalle;
 import com.daraf.projectdarafdb.fileIO.WriteFactura;
+import com.daraf.projectdarafprotocol.Cuerpo;
 import com.daraf.projectdarafprotocol.model.Cliente;
 import com.daraf.projectdarafprotocol.model.Detalle;
 import com.daraf.projectdarafprotocol.model.Empresa;
@@ -138,7 +139,7 @@ public class DBFacade {
             String cadena;
             BufferedReader bf = new BufferedReader(new FileReader("Factura.txt"));
             while ((cadena = bf.readLine()) != null) {
-                datos = cadena.split("\t");
+                datos = cadena.split("a");
                 if (datos[0].equals(idFactura)) {                    
                     factura.setId(datos[0]);
                     factura.setFecha(datos[1]);

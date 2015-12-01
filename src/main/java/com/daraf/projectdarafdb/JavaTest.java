@@ -21,6 +21,7 @@ public class JavaTest
         Factura factura;
         factura = readf.buscarFactura("0000000005");
         System.out.println(factura.toString());
+        System.out.println("factura detalles "+factura.getNumeroDetalles());
         
         
     }
